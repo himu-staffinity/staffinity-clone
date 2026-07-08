@@ -1,0 +1,99 @@
+backend:
+  name: github
+  repo: himu-staffinity/staffinity-clone
+  branch: main
+  site_domain: http://localhost:8788
+  base_url: http://localhost:8788
+  auth_endpoint: /api/auth
+
+media_folder: public/assets/images
+public_folder: /assets
+
+collections:
+  - label: Solutions
+    name: solutions
+    folder: src/content/solutions
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Subtitle
+        name: subtitle
+        widget: list
+      - label: Icon
+        name: icon
+        widget: string
+      - label: Summary
+        name: summary
+        widget: markdown
+        required: false
+      - label: Primary Question
+        name: primary_question
+        widget: string
+        required: false
+      - label: Primary Answer
+        name: primary_answer
+        widget: markdown
+        required: false
+      - label: Details
+        name: details
+        widget: list
+        required: false
+        fields:
+          - label: Question
+            name: question
+            widget: string
+          - label: Answer
+            name: answer
+            widget: list
+            fields:
+              - label: Name
+                name: name
+                widget: string
+              - label: Description
+                name: description
+                widget: markdown
+      - label: Layout
+        name: layout
+        widget: string
+        required: false
+      - label: Permalink
+        name: permalink
+        widget: string
+        required: false
+
+  - label: Authors
+    name: authors
+    folder: src/content/authors
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - label: Name
+        name: name
+        widget: string
+      - label: Job
+        name: job
+        widget: string
+      - label: Description
+        name: description
+        widget: markdown
+      - label: Avatar
+        name: avatar
+        widget: image
+        required: false
+      - label: Linkedin
+        name: linkedin
+        widget: string
+        required: false
+
+  - label: Stories
+    name: stories
+    folder: src/content/stories
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - label: Title
+        name: title
+        widget: string

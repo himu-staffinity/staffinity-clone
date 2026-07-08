@@ -1,0 +1,54 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+
+// Direct .md import — Astro gives us frontmatter + rawContent for free.
+// No content collections, no markdown processor needed.
+import { frontmatter, rawContent } from "../content/stories/story.md";
+
+const rawBody = rawContent();
+
+// Split raw markdown on "## " at line start into sections
+const sections = rawBody
+  .split(/(?=^## )/m)
+  .filter((s) => s.trim())
+  .map((section) => {
+    const lines = section.trim().split("\n");
+    // Parse heading line: "## S — Strategie" or "## N"
+    const headingLine = lines[0]!.replace(/^##\s+/, "").trim();
+    const letter = headingLine.charAt(0);
+    const dashIndex = headingLine.indexOf("—");
+    const heading =
+      dashIndex > 0
+        ? headingLine.slice(dashIndex + 1).trim()
+        : headingLine.length > 1
+          ? headingLine.slice(1).trim()
+          : "";
+
+    // Body text → paragraphs (plain text content, no rich markdown)
+    const bodyText = lines.slice(1).join("\n").trim();
+    const html = bodyText
+      ? bodyText
+          .split(/\n\n+/)
+          .map((p) => `<p>${p.replace(/\n/g, " ").trim()}</p>`)
+          .join("\n")
+      : "";
+
+    return { letter, heading, html };
+  });
+---
+
+<PageLayout title={frontmatter.title}>
+  <section>
+    {
+      sections.map((section) => (
+        <div class="story-container">
+          <div class="letter">{section.letter}</div>
+          <div class="content">
+            {section.heading && <h3>{section.heading}</h3>}
+            {section.html && <Fragment set:html={section.html} />}
+          </div>
+        </div>
+      ))
+    }
+  </section>
+</PageLayout>

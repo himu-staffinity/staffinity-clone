@@ -1,0 +1,56 @@
+---
+import { Logo, Menu } from "./icons";
+
+interface NavItem {
+  name: string;
+  url: string;
+}
+
+interface Props {
+  nav: NavItem[];
+}
+
+const { nav } = Astro.props;
+---
+
+<header>
+  <nav>
+    <a class="logo" href="/">
+      <Logo />
+    </a>
+    <ul class="nav-links">
+      {nav.map((link) => (
+        <li><a href={link.url}>{link.name}</a></li>
+      ))}
+    </ul>
+    <div class="menu">
+      <Menu />
+    </div>
+  </nav>
+</header>
+<script>
+  window.onscroll = function () {
+    var nav = document.querySelector("nav");
+    if (!nav) return;
+    if (window.scrollY > 10) {
+      nav.classList.add("sticky");
+    } else {
+      nav.classList.remove("sticky");
+    }
+  };
+
+  const navMenu = document.querySelector(".menu");
+
+  navMenu?.addEventListener("click", function () {
+    var navLinks = document.querySelector(".nav-links");
+    if (!navLinks) return;
+    navLinks.classList.toggle("show");
+    navMenu.classList.toggle("show");
+
+    if (navLinks.classList.contains("show")) {
+      navMenu.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#efa593"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>`;
+    } else {
+      navMenu.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>`;
+    }
+  });
+</script>

@@ -1,0 +1,46 @@
+.carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  display: grid;
+  align-items: center;
+
+  .carousel-items {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% / 5) - 10px);
+    gap: 10px;
+    transition: transform 0.4s ease-in-out;
+  }
+
+  .carousel-subtitle {
+    font-size: 0.8rem;
+  }
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 60%;
+  transform: translateY(-50%);
+  cursor: pointer;
+
+  &.prev {
+    left: -3rem;
+  }
+
+  &.next {
+    right: -3rem;
+  }
+
+  @include tablet-or-smaller {
+    top: 55%;
+
+    &.prev {
+      left: -1rem;
+    }
+
+    &.next {
+      right: -1rem;
+    }
+  }
+}

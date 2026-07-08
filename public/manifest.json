@@ -1,0 +1,16 @@
+{
+  "name": "Staffinity.ai",
+  "short_name": "Staffinity",
+  "description": "Staffinity.ai ist ein innovatives Unternehmen, das Softwarelösungen für die Personalbeschaffung entwickelt.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#46A19E",
+  "icons": [
+    {
+      "src": "/assets/images/196x196.png",
+      "sizes": "196x196",
+      "type": "image/png"
+    }
+  ]
+}

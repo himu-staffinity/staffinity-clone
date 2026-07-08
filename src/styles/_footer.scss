@@ -1,0 +1,133 @@
+footer {
+  background-color: $black;
+  border-top: 1px solid $turquoise;
+
+  .footer-grid,
+  .footer-left,
+  .footer-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+
+    @include tablet-or-smaller {
+      grid-template-columns: 1fr;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      gap: 0;
+    }
+  }
+
+  .footer-left {
+    padding: 4rem 2rem;
+
+    ul {
+      margin: 0;
+    }
+
+    @include tablet-or-smaller {
+      padding: 2rem 1rem;
+
+      ul {
+        padding: 0;
+        li{
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  .turquoise {
+    background-color: $turquoise;
+  }
+
+  .footer-logo {
+    #logo {
+      height: 3rem;
+    }
+  }
+
+  .footer-newsletter {
+    padding: 4rem 2rem;
+
+    h3 {
+      margin-top: 0;
+    }
+    .newsletter-form {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+
+      input {
+        flex: 1;
+        background: rgba($color: $black, $alpha: 0.2);
+        border: none;
+        padding: 0.8rem;
+        color: $white;
+
+        &::placeholder {
+          color: $white;
+        }
+      }
+    }
+
+    .privacy-note {
+      font-size: 0.75rem;
+    }
+
+    @include tablet-or-smaller {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+
+      .privacy-note {
+        max-width: 60%;
+      }
+    }
+  }
+
+  .footer-bottom {
+    align-items: center;
+
+    .legal-links {
+      padding-right: 1rem;
+      order: 1;
+
+      a {
+        font-size: 0.75rem;
+
+        &:hover {
+          color: #00ffff;
+        }
+      }
+
+      @include tablet-or-smaller {
+        order: 2;
+      }
+    }
+
+    .social-links {
+      display: flex;
+      padding: 1rem 0;
+      gap: 1rem;
+      order: 2;
+
+      .social-icon {
+        border-radius: 50%;
+        background-color: $green;
+
+        a {
+          height: 0.5rem;
+          width: 0.5rem;
+        }
+      }
+
+      @include tablet-or-smaller {
+          order: 1;
+          align-items: center;
+          justify-content: center;
+      }
+    }
+  }
+}

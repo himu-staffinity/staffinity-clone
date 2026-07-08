@@ -1,0 +1,114 @@
+---
+import { SITE } from "../consts";
+import { nav } from "../data/nav";
+import { social } from "../data/social";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import MetaTags from "../components/MetaTags.astro";
+import "../styles/global.scss";
+
+export interface Props {
+  title: string;
+  meta_title?: string;
+  meta_description?: string;
+  image?: string;
+  author?: string;
+}
+
+const {
+  title,
+  meta_title,
+  meta_description,
+  image,
+  author,
+} = Astro.props;
+
+const displayTitle = meta_title || title || SITE.title;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>{SITE.title} | {displayTitle}</title>
+    <link rel="canonical" href={`${SITE.url}${Astro.url.pathname}`} />
+    <link rel="manifest" href="/manifest.json" />
+    <MetaTags
+      title={displayTitle}
+      meta_description={meta_description}
+      image={image}
+      author={author}
+    />
+    <meta name="robots" content="index,follow" />
+    <meta itemprop="name" content={SITE.title} />
+    <meta name="google" content="notranslate" />
+    <link href="/rss.xml" type="application/rss+xml" rel="alternate" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/images/144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/images/114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/images/72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="/assets/images/57x57.png" />
+    <link rel="shortcut icon" sizes="196x196" href="/assets/images/196x196.png" />
+    <link rel="shortcut icon" href="/assets/images/favicon.png" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="msapplication-TileImage" content="/assets/images/144x144.png" />
+
+    <link rel="preload" href="/assets/SpaceMono-Regular.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="/assets/Ubuntu-R.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="/assets/SpaceGrotesk-Regular.ttf" as="font" type="font/ttf" crossorigin />
+  </head>
+  <body>
+    <Header nav={nav} />
+    <main>
+      <slot />
+    </main>
+    <Footer nav={nav} social={social} />
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        let textBoxes = document.querySelectorAll(".scramble") as NodeListOf<HTMLElement>;
+        let specialCharacters = [
+          "!", "§", "$", "%", "&", "/", "(", ")", "=", "?", "_", "<", ">", "^", "°", "*", "#", "-", ":", ";", "~",
+        ];
+        function random(min: number, max: number) {
+          return Math.floor(Math.random() * (max - min)) + min;
+        }
+        const time = 20;
+        function startScrambleText(textBox: HTMLElement) {
+          let newStringSplit = "";
+          let count = 0, j = 0;
+          let delayAnimation = 0;
+          let stringSplit = textBox.textContent.split("");
+          textBox.style.width = stringSplit.length + "ch";
+          textBox.style.animation = "typing " + (time * stringSplit.length) / 1000 + "s steps(" + stringSplit.length + ")";
+          let interval = setInterval(function () {
+            newStringSplit = "";
+            for (let i = 0; i <= stringSplit.length - 1; i++) {
+              if (i <= j && count >= stringSplit.length + delayAnimation) {
+                newStringSplit += stringSplit[i];
+              } else {
+                newStringSplit += specialCharacters[random(0, specialCharacters.length - 1)];
+              }
+            }
+            textBox.textContent = newStringSplit;
+            count++;
+            if (count >= stringSplit.length + delayAnimation) {
+              j++;
+              if (j >= stringSplit.length) {
+                clearInterval(interval);
+              }
+            }
+          }, time);
+        }
+        let delay = 1;
+        for (let textBox of textBoxes) {
+          setTimeout(()=> {
+            startScrambleText(textBox);
+          }, delay);
+          delay += 50;
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,75 @@
+---
+/**
+ * MetaTags — Open Graph & Twitter Card meta tags for social sharing.
+ *
+ * Provides rich link previews on Discord, Twitter/X, LinkedIn, Slack, Facebook, etc.
+ * Falls back to SITE-wide defaults when page-specific props aren't provided.
+ */
+import { SITE } from "../consts";
+
+export interface Props {
+  /** Page title. Used for og:title, twitter:title, and the <title> element. */
+  title: string;
+  /** Override title for meta tags only (leaves <title> untouched if you set it elsewhere). */
+  meta_title?: string;
+  /** Meta description. Falls back to SITE.description. */
+  meta_description?: string;
+  /** Full URL to the OG image. Falls back to /assets/images/og-default.svg. */
+  image?: string;
+  /** Content type. `website` (default) or `article`. */
+  og_type?: "website" | "article";
+  /** Twitter card style. `summary_large_image` (default) gives a bigger preview. */
+  twitter_card?: "summary" | "summary_large_image" | "app" | "player";
+  /** Page author name. */
+  author?: string;
+}
+
+const {
+  title,
+  meta_title,
+  meta_description,
+  image = "/assets/images/og-default.svg",
+  og_type = "website",
+  twitter_card = "summary_large_image",
+  author,
+} = Astro.props;
+
+const displayTitle = meta_title || title;
+const description = meta_description || SITE.description;
+const pageUrl = new URL(Astro.url.pathname, SITE.url).href;
+---
+
+<!-- Primary meta -->
+<meta name="description" content={description} />
+<meta name="author" content={author || SITE.title} />
+
+<!-- Open Graph (Facebook, LinkedIn, Discord, Slack, etc.) -->
+<meta property="og:site_name" content={SITE.title} />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content={pageUrl} />
+<meta property="og:type" content={og_type} />
+<meta property="og:title" content={displayTitle} />
+<meta property="og:description" content={description} />
+{
+  image && (
+    <>
+      <meta property="og:image" content={new URL(image, SITE.url).href} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:type" content="image/svg+xml" />
+      <meta property="og:image:alt" content={`${displayTitle} — ${SITE.title}`} />
+    </>
+  )
+}
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content={twitter_card} />
+<meta name="twitter:site" content={`@${SITE.twitter}`} />
+<meta name="twitter:creator" content={`@${SITE.twitter}`} />
+<meta name="twitter:title" content={displayTitle} />
+<meta name="twitter:description" content={description} />
+{
+  image && (
+    <meta name="twitter:image" content={new URL(image, SITE.url).href} />
+  )
+}

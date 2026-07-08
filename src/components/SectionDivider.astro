@@ -1,0 +1,18 @@
+---
+import { DividerShadow, Divider } from "./icons";
+
+interface Props {
+  nextsection: string;
+}
+
+const { nextsection } = Astro.props;
+---
+
+<div class="divider" data-nextsection={nextsection}>
+  <div class="shadow">
+    <DividerShadow />
+  </div>
+  <div class="line">
+    <Divider />
+  </div>
+</div>

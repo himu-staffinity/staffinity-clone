@@ -1,0 +1,25 @@
+[tools]
+node = "26.3.1"
+
+[settings]
+# Tells mise to officially respect .nvmrc and .node-version files
+idiomatic_version_file_enable_tools = ["node"]
+experimental = true
+pin = true
+
+[tasks.deps]
+run = "npm install"
+description = "Installs dependencies"
+
+[tasks.dev]
+run = "npm run dev"
+description = "Starts the development server"
+
+[tasks.build]
+run = "npm run build"
+description = "Builds the project with npm"
+
+# Run using `mise r preview`
+[tasks.preview]
+run = "npm run build && wrangler pages dev ."
+description = "Starts the preview server using astro's inbuilt preview"

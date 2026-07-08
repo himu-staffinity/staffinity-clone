@@ -1,0 +1,21 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import About from "../components/sections/About.astro";
+import { getCollection } from "astro:content";
+
+const authors = await getCollection("authors");
+---
+
+<PageLayout title="Über uns" meta_title="About">
+  <About>
+    <div slot="authors">
+      {authors.map((author) => (
+        <div class="author">
+          <img src={author.data.avatar} alt={author.data.name} />
+          <h4>{author.data.name} <br /><span class="job">{author.data.job}</span></h4>
+          <p>{author.data.description}</p>
+        </div>
+      ))}
+    </div>
+  </About>
+</PageLayout>

@@ -1,0 +1,23 @@
+---
+import Button from "../Button.astro";
+import SectionDivider from "../SectionDivider.astro";
+import { ExpertiseLogo } from "../icons";
+
+interface Props {
+  text: string;
+  button_text?: string;
+  button_url?: string;
+  divider?: boolean;
+}
+
+const { text, button_text, button_url, divider } = Astro.props;
+---
+
+<section id="expertise" class="divided-section">
+  <div class="console">
+    <p>{text}</p>
+    <ExpertiseLogo />
+    {button_text && button_url ? <Button content={button_text} link={button_url} /> : null}
+  </div>
+  {divider ? <SectionDivider nextsection="technologies" /> : null}
+</section>

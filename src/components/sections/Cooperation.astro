@@ -1,0 +1,95 @@
+---
+import SectionDivider from "../SectionDivider.astro";
+import { ButtonBeige } from "../icons";
+
+interface FAQItem {
+  question: string;
+  answer: string | { name: string; description: string }[];
+}
+
+interface Props {
+  maintitle: string;
+  faq: FAQItem[];
+  primary_question?: string;
+  primary_answer?: string;
+  image_src?: string;
+  image_alt?: string;
+  number?: boolean;
+  iconComponent?: any;
+}
+
+const { maintitle, faq, primary_question, primary_answer, image_src, image_alt, number, iconComponent: IconComponent } = Astro.props;
+---
+
+<div class="section-wrapper collab">
+  <img src="/assets/images/collaboration.webp" alt="Collaboration Background" class="background-image" />
+  <section id="collaboration" class="divided-section">
+    <div class="console">
+      <h3 set:html={maintitle} />
+      <div class="text-content">
+        {primary_question && primary_answer && (
+          <>
+            <h4 class="question active">
+              <span><ButtonBeige /></span>
+              {primary_question}
+            </h4>
+            <div class="answer show">
+              <div class="answer-content">
+                <p>{primary_answer}</p>
+              </div>
+            </div>
+          </>
+        )}
+        {faq.map((item) => (
+          <>
+            <h4 class="question">
+              <span><ButtonBeige /></span>
+              {item.question}
+            </h4>
+            <div class="answer">
+              <div class="answer-content">
+                {Array.isArray(item.answer) ? (
+                  <ul>
+                    {item.answer.map((sub) => (
+                      <li><strong>{sub.name}:</strong> {sub.description}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>{item.answer}</p>
+                )}
+              </div>
+            </div>
+          </>
+        ))}
+      </div>
+    </div>
+    {IconComponent ? (
+      <div class="visual">
+        <IconComponent />
+      </div>
+    ) : image_src ? (
+      <div class="visual">
+        <img src={image_src} alt={image_alt || ""} />
+      </div>
+    ) : null}
+    {number ? <SectionDivider nextsection="about" /> : <SectionDivider nextsection="collab-content" />}
+  </section>
+</div>
+
+<script>
+  const items = document.getElementsByClassName("question");
+  if (items.length > 1) {
+    items[0].classList.add("active");
+    items[0].nextElementSibling?.classList.add("show");
+  }
+  for (let item of items) {
+    item.addEventListener("click", function () {
+      for (let otherItem of items) {
+        otherItem.classList.remove("active");
+        otherItem.nextElementSibling?.classList.remove("show");
+      }
+      item.classList.add("active");
+      item.nextElementSibling?.classList.add("show");
+    });
+  }
+</script>

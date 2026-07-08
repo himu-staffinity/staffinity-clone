@@ -1,0 +1,17 @@
+---
+import { SITE } from "../../consts";
+---
+
+<script is:inline type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "{SITE.title}",
+    "description": "{SITE.description}",
+    "url": "{SITE.url}",
+    "publisher": {
+      "@type": "Organization",
+      "name": "{SITE.title}"
+    }
+  }
+</script>

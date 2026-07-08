@@ -1,0 +1,29 @@
+---
+import Button from "./Button.astro";
+import { DividerButton } from "./icons";
+---
+
+<div class="console">
+  <h2 class="hero">Quality<br /> Meets<br /> Talent</h2>
+  <p>
+    It's that perfect blend of German efficiency and Indian creativity, bringing you custom software solutions that are free - fast, cutting edge and 100% tailored to you.
+  </p>
+  <Button content="Talk to an Expert" link="/meet" color="beige" />
+  <div class="console-button">
+    <DividerButton />
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const consoleButton = document.querySelector('.console-button');
+    if (consoleButton) {
+      consoleButton.addEventListener('click', function() {
+        const sectors = document.getElementById('expertise');
+        if (sectors) {
+          sectors.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    }
+  });
+</script>

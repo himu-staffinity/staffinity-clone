@@ -1,0 +1,42 @@
+---
+import SectionDivider from "../SectionDivider.astro";
+import { sectors } from "../../data/sectors";
+import { Startups, Midsize, Automotive as SectorAuto, Healthcare as SectorHealth, Yours } from "../icons/sectors/index.js";
+
+interface Props {
+  number?: boolean;
+}
+
+const { number } = Astro.props;
+
+const sectorIcons: Record<string, any> = {
+  "sectors/startups": Startups,
+  "sectors/midsize": Midsize,
+  "sectors/automotive": SectorAuto,
+  "sectors/healthcare": SectorHealth,
+  "sectors/yours": Yours,
+};
+---
+
+<section class="divided-section" id="sectors">
+  <div class="console">
+    <h3>{number ? "02 | " : ""} <span class="scramble">SECTORS</span></h3>
+    <div class="grid5">
+      {sectors.map((sector) => {
+        const SectorIcon = sectorIcons[sector.icon];
+        return (
+          <div class="card">
+            <div class="icon">
+              {SectorIcon ? <SectorIcon /> : null}
+            </div>
+            <h4>{sector.title}</h4>
+            <p>{sector.subtitle}</p>
+            <div class="link-icon">
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+  <SectionDivider nextsection="collaboration" />
+</section>

@@ -1,0 +1,56 @@
+$black: #121A1A;
+$green: #66FBF0;
+$white: white;
+$turquoise: #46A19E;
+$beige: #E6CFA1;
+
+@font-face {
+    font-family: 'Ubuntu Mono';
+    src: url('/assets/UbuntuMono-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Ubuntu Mono Bold';
+    src: url('/assets/UbuntuMono-Bold.ttf');
+}
+
+@font-face {
+    font-family: 'Ubuntu Regular';
+    src: url('/assets/Ubuntu-R.ttf');
+}
+
+:root {
+    --green: #66FBF0;
+    --black: #121A1A;
+    --white: white;
+    --heading-font: 'Ubuntu Mono Bold', monospace;
+    --body-font: 'Ubuntu Regular', sans-serif;
+    --primary: var(--black);
+    --secondary: var(--white);
+    --foreground: var(--white);
+    --background: var(--black);
+}
+
+.primary {
+    color: var(--primary);
+}
+
+.secondary {
+    color: var(--secondary);
+}
+
+.green {
+    color: $green;
+}
+
+.blue {
+    color: $green;
+}
+
+.body-font {
+    font-family: var(--body-font);
+}
+
+.heading-font {
+    font-family: var(--heading-font);
+}

@@ -1,0 +1,40 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import CTA from "../components/CTA.astro";
+import StructuredDataWebpage from "../components/structured-data/Webpage.astro";
+
+export interface Props {
+  title: string;
+  meta_title?: string;
+  meta_description?: string;
+  image?: string;
+  author?: string;
+  og_type?: "website" | "article";
+}
+
+const { title, meta_title, meta_description, image, author } = Astro.props;
+---
+
+<BaseLayout title={title} meta_title={meta_title} meta_description={meta_description} image={image} author={author}>
+  {title !== "Home" && <section class="top"></section>}
+  <slot />
+  <CTA />
+  <StructuredDataWebpage title={title} />
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const dividers = document.querySelectorAll('.divider') as NodeListOf<HTMLElement>;
+      dividers.forEach(divider => {
+        divider.addEventListener('click', function() {
+          console.log('Divider clicked');
+          const nextSectionId = divider.dataset.nextsection;
+          if (nextSectionId) {
+            const nextSection = document.getElementById(nextSectionId);
+            if (nextSection) {
+              nextSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+        });
+      });
+    });
+  </script>
+</BaseLayout>

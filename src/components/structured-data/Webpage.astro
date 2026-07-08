@@ -1,0 +1,22 @@
+---
+import { SITE } from "../../consts";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<script is:inline type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "{title}",
+    "publisher": {
+      "@type": "Organization",
+      "name": "{SITE.title}"
+    },
+    "url": "{SITE.url}{Astro.url.pathname}"
+  }
+</script>

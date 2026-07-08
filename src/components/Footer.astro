@@ -1,0 +1,85 @@
+---
+import { Logo, ButtonBeige, Linkedin, Facebook, Twitter, Instagram } from "./icons";
+
+interface NavItem {
+  name: string;
+  url: string;
+}
+
+interface SocialItem {
+  name: string;
+  url: string;
+  icon: string;
+}
+
+interface Props {
+  nav: NavItem[];
+  social: SocialItem[];
+}
+
+const { nav, social } = Astro.props;
+
+const socialIcons: Record<string, any> = {
+  linkedin: Linkedin,
+  facebook: Facebook,
+  twitter: Twitter,
+  instagram: Instagram,
+};
+---
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-left">
+      <div class="footer-logo">
+        <Logo />
+        <p>NEXT-GEN SOFTWARE</p>
+      </div>
+      <div class="footer-links">
+        <ul>
+          {nav.map((link) => (
+            <li><a href={link.url}>{link.name}</a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+    <div class="footer-newsletter turquoise">
+      <h3>Stay in touch</h3>
+      <form class="newsletter-form">
+        <input id="footer-input-email" type="email" placeholder="Please enter e-mail address" />
+        <div class="button" id="footer-submit-email">
+          Submit
+          <span>
+            <ButtonBeige />
+          </span>
+        </div>
+      </form>
+      <p class="privacy-note">We keep your data private and only share it with third parties that make this service possible. Read our privacy policy for more information.</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="legal-links">
+      <a href="/impressum">Impressum</a>
+      <a href="/datenschutz">Datenschutzerklärung</a>
+      <a href="/meet">CONTACT US</a>
+    </div>
+    <div class="social-links turquoise">
+      {social.map((s) => {
+        const Icon = socialIcons[s.icon];
+        return Icon ? (
+          <a href={s.url}>
+            <Icon />
+          </a>
+        ) : null;
+      })}
+    </div>
+  </div>
+</footer>
+
+<script>
+  const submitEmail = document.getElementById("footer-submit-email");
+  const emailInput = document.getElementById("footer-input-email") as HTMLInputElement;
+  submitEmail?.addEventListener("click", function () {
+    const email = emailInput?.value;
+    console.log(`Currently email sending is not available. Contact: info@staffinity.ai. Your email is:`, email);
+  });
+</script>

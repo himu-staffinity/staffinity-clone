@@ -1,0 +1,11 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import Technologies from "../components/sections/Technologies.astro";
+import { getCollection } from "astro:content";
+
+const solutions = await getCollection("solutions");
+---
+
+<PageLayout title="Technologien" meta_title="Technologies">
+  <Technologies solutions={solutions} />
+</PageLayout>

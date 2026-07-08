@@ -1,0 +1,43 @@
+.button {
+    display: flex;
+    width: max-content;
+    align-items: center;
+    border: 1px solid $beige;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+
+    a {
+        color: $beige;
+        text-decoration: none;
+    }
+    
+    transition: all 100ms linear;
+    cursor: pointer;
+    color: $beige;
+
+    &:hover {
+        text-decoration: none;
+        color: $green;
+    }
+}
+
+.console-button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 1.5rem;
+    cursor: pointer;
+
+    svg {
+        height: 50px;
+    }
+}
+
+.button-row {
+    align-self: flex-end;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}

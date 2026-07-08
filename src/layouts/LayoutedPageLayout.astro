@@ -1,0 +1,19 @@
+---
+import PageLayout from "./PageLayout.astro";
+
+export interface Props {
+  title: string;
+  meta_title?: string;
+  meta_description?: string;
+}
+
+const { title, meta_title, meta_description } = Astro.props;
+---
+
+<PageLayout title={title} meta_title={meta_title} meta_description={meta_description}>
+  <section>
+    <div class="card">
+      <slot />
+    </div>
+  </section>
+</PageLayout>

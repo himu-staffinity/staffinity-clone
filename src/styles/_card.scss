@@ -1,0 +1,71 @@
+.card {
+    background: rgba(darken($turquoise, 30%), 0.5);
+    border: 1px solid $turquoise;
+    border-radius: 8px;
+    transition: all 100ms linear;
+    cursor: pointer;
+    position: relative;
+
+    a {
+        text-decoration: none;
+    }
+
+    padding: 1rem;
+
+    svg {
+        height: 94px;
+        width: 94px;
+    }
+
+    .link-icon {
+        position: absolute;
+        bottom: 0.25rem;
+        right: 0.25rem;
+
+        svg {
+            height: 1.5rem;
+            width: 1.5rem;
+        }
+    }
+
+    &:hover {
+        border: 1px solid $green;
+    }
+
+    @include mobile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    ul {
+        padding-left: 0;
+        list-style-position: inside;
+    }
+
+    li {
+        max-width: 100%;
+    }
+
+    &.contact .button {
+        @include mobile {
+            margin-bottom: 0.5rem;
+        }
+    }
+
+    &.contact {
+      margin: 2rem 0;
+
+      .contact-buttons {
+        display: flex;
+        justify-content: start;
+        margin-bottom: 1rem;
+
+        @include mobile {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+    }
+}

@@ -1,0 +1,16 @@
+---
+import { ButtonBeige } from "./icons";
+
+interface Props {
+  content: string;
+  link?: string;
+  color?: string;
+}
+
+const { content, link } = Astro.props;
+---
+
+<div class="button">
+  {link ? <a href={link}>{content}</a> : <span>{content}</span>}
+  <ButtonBeige />
+</div>

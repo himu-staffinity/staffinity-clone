@@ -1,0 +1,10 @@
+---
+import { SITE } from "../consts";
+import { Mail, Mobile, CtaLinkedin } from "./icons";
+---
+
+<div class="cta-button">
+  <a href={`mailto:${SITE.email}`} class="half first"><Mail /></a>
+  <a href={`tel:${SITE.phone}`} class="half"><Mobile /></a>
+  <a href={SITE.linkedin} target="_blank" rel="noopener noreferrer" class="half last"><CtaLinkedin /></a>
+</div>

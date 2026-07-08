@@ -1,0 +1,40 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import Hero from "../components/sections/Hero.astro";
+import Expertise from "../components/sections/Expertise.astro";
+import Technologies from "../components/sections/Technologies.astro";
+import Areas from "../components/sections/Areas.astro";
+import Cooperation from "../components/sections/Cooperation.astro";
+import About from "../components/sections/About.astro";
+import StructuredDataWebsite from "../components/structured-data/Website.astro";
+import { getCollection } from "astro:content";
+
+const solutions = await getCollection("solutions");
+
+const faq = [
+  { question: "Project Execution", answer: "You have an idea, and we're here to bring it to life. From concept to delivery, we ensure your project is executed smoothly, with attention to every detail." },
+  { question: "Team Support", answer: "You have established structures and want to expand your teams with our expertise. We provide skilled professionals flexibly." },
+  { question: "Custom Made Solutions", answer: "We understand that each business is unique. We tailor solutions that fit your specific needs, optimizing processes and driving results with precision." },
+];
+---
+
+<PageLayout title="Home">
+  <Hero />
+  <Expertise
+    text="Our global experts make cutting-edge tech accessible and deliver top-notch software solutions tailored to your needs - without breaking the bank."
+    button_text="More about us"
+    button_url="/about"
+    divider={true}
+  />
+  <Technologies number={true} solutions={solutions} />
+  <Areas number={true} />
+  <Cooperation
+    maintitle='03 | <span class="scramble">COLLABORATION</span>'
+    faq={faq}
+    image_src="/assets/images/collab.webp"
+    image_alt="Collaboration"
+    number={true}
+  />
+  <About number={true} />
+  <StructuredDataWebsite />
+</PageLayout>
