@@ -62,3 +62,5 @@ Then run `mise r preview` and visit `http://localhost:8788/admin/`.
 ## Deployment
 
 Cloudflare Pages with `astro build`. Functions are copied to `dist/functions/` during build.
+
+Some changes to be made
