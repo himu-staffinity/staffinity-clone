@@ -1,10 +1,6 @@
 ---
 import { Logo, ButtonBeige, Linkedin, Facebook, Twitter, Instagram } from "./icons";
-
-interface NavItem {
-  name: string;
-  url: string;
-}
+import { type Locale, getLocalizedPath } from "../utils";
 
 interface SocialItem {
   name: string;
@@ -13,11 +9,37 @@ interface SocialItem {
 }
 
 interface Props {
-  nav: NavItem[];
+  nav: { name: string; url: string }[];
   social: SocialItem[];
+  lang?: Locale;
 }
 
-const { nav, social } = Astro.props;
+const { nav, social, lang = "de" } = Astro.props as Props;
+
+export const footer = {
+  en: {
+    tagline: "NEXT-GEN SOFTWARE",
+    stay_in_touch: "Stay in touch",
+    email_placeholder: "Please enter e-mail address",
+    submit: "Submit",
+    privacy_note: "We keep your data private and only share it with third parties that make this service possible. Read our privacy policy for more information.",
+    impressum: "Impressum",
+    privacy_policy: "Privacy Policy",
+    contact_us: "CONTACT US",
+  },
+  de: {
+    tagline: "NEXT-GEN SOFTWARE",
+    stay_in_touch: "Bleiben Sie in Kontakt",
+    email_placeholder: "E-Mail-Adresse eingeben",
+    submit: "Absenden",
+    privacy_note: "Wir behandeln Ihre Daten vertraulich und geben sie nur an Dritte weiter, die diesen Service ermöglichen. Lesen Sie unsere Datenschutzerklärung für weitere Informationen.",
+    impressum: "Impressum",
+    privacy_policy: "Datenschutz",
+    contact_us: "KONTAKT",
+  },
+};
+
+const footerData = footer[lang];
 
 const socialIcons: Record<string, any> = {
   linkedin: Linkedin,
@@ -32,7 +54,7 @@ const socialIcons: Record<string, any> = {
     <div class="footer-left">
       <div class="footer-logo">
         <Logo />
-        <p>NEXT-GEN SOFTWARE</p>
+        <p>{footerData.tagline}</p>
       </div>
       <div class="footer-links">
         <ul>
@@ -43,24 +65,24 @@ const socialIcons: Record<string, any> = {
       </div>
     </div>
     <div class="footer-newsletter turquoise">
-      <h3>Stay in touch</h3>
+      <h3>{footerData.stay_in_touch}</h3>
       <form class="newsletter-form">
-        <input id="footer-input-email" type="email" placeholder="Please enter e-mail address" />
+        <input id="footer-input-email" type="email" placeholder={footerData.email_placeholder} />
         <div class="button" id="footer-submit-email">
-          Submit
+          {footerData.submit}
           <span>
             <ButtonBeige />
           </span>
         </div>
       </form>
-      <p class="privacy-note">We keep your data private and only share it with third parties that make this service possible. Read our privacy policy for more information.</p>
+      <p class="privacy-note">{footerData.privacy_note}</p>
     </div>
   </div>
   <div class="footer-bottom">
     <div class="legal-links">
-      <a href="/impressum">Impressum</a>
-      <a href="/datenschutz">Datenschutzerklärung</a>
-      <a href="/meet">CONTACT US</a>
+      <a href={getLocalizedPath("/impressum", lang)}>{footerData.impressum}</a>
+      <a href={getLocalizedPath("/privacy-policy", lang)}>{footerData.privacy_policy}</a>
+      <a href={getLocalizedPath("/meet", lang)}>{footerData.contact_us}</a>
     </div>
     <div class="social-links turquoise">
       {social.map((s) => {

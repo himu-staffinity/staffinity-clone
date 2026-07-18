@@ -1,5 +1,23 @@
 ---
-import Console from "../Console.astro";
+import Button from "../Button.astro";
+import { DividerButton } from "../icons";
+import { getLangFromUrl, getLocalizedPath } from "../../utils";
+
+const hero = {
+  en: {
+    title: "Quality<br /> Meets<br /> Talent",
+    subtitle: "It's that perfect blend of German efficiency and Indian creativity, bringing you custom software solutions that are free - fast, cutting edge and 100% tailored to you.",
+    cta: "Talk to an Expert",
+  },
+  de: {
+    title: "Qualität<br /> Trifft<br /> Talent",
+    subtitle: "Diese perfekte Mischung aus deutscher Effizienz und indischer Kreativität bringt Ihnen maßgeschneiderte Softwarelösungen, die frei sind – schnell, hochmodern und 100 % auf Sie zugeschnitten.",
+    cta: "Mit Experten sprechen",
+  },
+};
+
+const lang = getLangFromUrl(Astro.url);
+const heroData = hero[lang];
 ---
 
 <div class="section-wrapper special">
@@ -7,6 +25,30 @@ import Console from "../Console.astro";
     <source src="/assets/bgd.mp4" type="video/mp4" />
   </video>
   <section id="hero">
-    <Console />
+  <div class="console">
+    <h2 class="hero" set:html={heroData.title} />
+    <p>
+      {heroData.subtitle}
+    </p>
+      <Button content={heroData.cta} link={getLocalizedPath('/meet', lang)} color="beige" />
+    <div class="console-button">
+      <DividerButton />
+    </div>
+  </div>
+
   </section>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const consoleButton = document.querySelector('.console-button');
+    if (consoleButton) {
+      consoleButton.addEventListener('click', function() {
+        const sectors = document.getElementById('expertise');
+        if (sectors) {
+          sectors.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    }
+  });
+</script>

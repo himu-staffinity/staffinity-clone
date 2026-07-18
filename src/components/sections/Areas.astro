@@ -1,6 +1,7 @@
 ---
 import SectionDivider from "../SectionDivider.astro";
-import { sectors } from "../../data/sectors";
+import { getLangFromUrl } from "../../utils";
+import { sections } from "../../content/structure/sections";
 import { Startups, Midsize, Automotive as SectorAuto, Healthcare as SectorHealth, Yours } from "../icons/sectors/index.js";
 
 interface Props {
@@ -8,6 +9,27 @@ interface Props {
 }
 
 const { number } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const sectionsData = sections[lang];
+
+export const sectors = {
+  en: [
+    { icon: "sectors/startups", title: "Startups", subtitle: "Your startup solutions" },
+    { icon: "sectors/midsize", title: "Medium-sized Enterprises", subtitle: "Enterprise solutions" },
+    { icon: "sectors/automotive", title: "Automotive Industry", subtitle: "Automotive solutions" },
+    { icon: "sectors/healthcare", title: "Healthcare Technologies", subtitle: "Healthcare solutions" },
+    { icon: "sectors/yours", title: "Your Business Sector", subtitle: "Custom business solutions" },
+  ],
+  de: [
+    { icon: "sectors/startups", title: "Startups", subtitle: "Ihre Startup-Lösungen" },
+    { icon: "sectors/midsize", title: "Mittelständische Unternehmen", subtitle: "Enterprise-Lösungen" },
+    { icon: "sectors/automotive", title: "Automobilindustrie", subtitle: "Automotive-Lösungen" },
+    { icon: "sectors/healthcare", title: "Gesundheitstechnologien", subtitle: "Healthcare-Lösungen" },
+    { icon: "sectors/yours", title: "Ihr Geschäftsbereich", subtitle: "Maßgeschneiderte Lösungen" },
+  ],
+};
+
+const localizedSectors = sectors[lang];
 
 const sectorIcons: Record<string, any> = {
   "sectors/startups": Startups,
@@ -20,17 +42,17 @@ const sectorIcons: Record<string, any> = {
 
 <section class="divided-section" id="sectors">
   <div class="console">
-    <h3>{number ? "02 | " : ""} <span class="scramble">SECTORS</span></h3>
+    <h3>{number ? "02 | " : ""} <span class="scramble">{sectionsData.sectors}</span></h3>
     <div class="grid5">
-      {sectors.map((sector) => {
+      {localizedSectors.map((sector) => {
         const SectorIcon = sectorIcons[sector.icon];
         return (
           <div class="card">
             <div class="icon">
               {SectorIcon ? <SectorIcon /> : null}
             </div>
-            <h4>{sector.title}</h4>
-            <p>{sector.subtitle}</p>
+            <h4 style="overflow-wrap: break-word;">{sector.title}</h4>
+            <p style="overflow-wrap: break-word;">{sector.subtitle}</p>
             <div class="link-icon">
             </div>
           </div>

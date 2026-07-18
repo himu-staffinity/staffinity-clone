@@ -10,13 +10,14 @@ export interface Props {
   image?: string;
   author?: string;
   og_type?: "website" | "article";
+  isHome?: boolean;
 }
 
-const { title, meta_title, meta_description, image, author } = Astro.props;
+const { title, meta_title, meta_description, image, author, isHome = false } = Astro.props;
 ---
 
 <BaseLayout title={title} meta_title={meta_title} meta_description={meta_description} image={image} author={author}>
-  {title !== "Home" && <section class="top"></section>}
+  {!isHome && <section class="top"></section>}
   <slot />
   <CTA />
   <StructuredDataWebpage title={title} />
@@ -25,7 +26,6 @@ const { title, meta_title, meta_description, image, author } = Astro.props;
       const dividers = document.querySelectorAll('.divider') as NodeListOf<HTMLElement>;
       dividers.forEach(divider => {
         divider.addEventListener('click', function() {
-          console.log('Divider clicked');
           const nextSectionId = divider.dataset.nextsection;
           if (nextSectionId) {
             const nextSection = document.getElementById(nextSectionId);

@@ -1,6 +1,8 @@
 ---
 import SectionDivider from "../SectionDivider.astro";
 import { ButtonBeige } from "../icons";
+import { getLangFromUrl } from "../../utils";
+import { home } from "../../content/structure/home";
 
 interface FAQItem {
   question: string;
@@ -18,11 +20,13 @@ interface Props {
   iconComponent?: any;
 }
 
-const { maintitle, faq, primary_question, primary_answer, image_src, image_alt, number, iconComponent: IconComponent } = Astro.props;
+const { maintitle, faq, primary_question, primary_answer, image_src, image_alt, number, iconComponent: IconComponent } = Astro.props as Props;
+const lang = getLangFromUrl(Astro.url);
+const homeData = home[lang];
 ---
 
 <div class="section-wrapper collab">
-  <img src="/assets/images/collaboration.webp" alt="Collaboration Background" class="background-image" />
+  <img src="/assets/images/collaboration.webp" alt={homeData.collab_image_alt} class="background-image" />
   <section id="collaboration" class="divided-section">
     <div class="console">
       <h3 set:html={maintitle} />
@@ -72,6 +76,7 @@ const { maintitle, faq, primary_question, primary_answer, image_src, image_alt, 
         <img src={image_src} alt={image_alt || ""} />
       </div>
     ) : null}
+
     {number ? <SectionDivider nextsection="about" /> : <SectionDivider nextsection="collab-content" />}
   </section>
 </div>

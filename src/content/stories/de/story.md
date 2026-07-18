@@ -1,5 +1,5 @@
 ---
-title: "Die Story: Move Success Together in Trust"
+title: Move Success Together in Trust
 ---
 
 ## S — Strategie

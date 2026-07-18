@@ -1,0 +1,54 @@
+---
+import type { MarkdownInstance } from "astro";
+import PageLayout from "../../layouts/PageLayout.astro";
+import { getSite } from "../../consts";
+import { getLangFromUrl } from "../../utils";
+
+// for exporting language based paths
+export { getStaticPathsLang as getStaticPaths } from "../../utils";
+
+interface MeetFrontmatter {
+  title: string;
+  meta_title: string;
+  heading: string;
+  card_heading: string;
+  phone_label: string;
+  email_label: string;
+}
+
+const lang = getLangFromUrl(Astro.url);
+
+const meetPages = Object.values(import.meta.glob<MarkdownInstance<MeetFrontmatter>>("../../content/pages/*/meet.md", { eager: true }));
+const meetPage = meetPages.find(p => p.url?.endsWith(`${lang}/meet`));
+const { title, meta_title, heading, card_heading, phone_label, email_label } = meetPage!.frontmatter;
+
+const SITE = getSite(lang);
+---
+
+<PageLayout title={title} meta_title={meta_title} og_type="website">
+  <section>
+    <h1>{heading}</h1>
+  </section>
+  <section style="min-height: 650px;">
+    <div style="width:100%;height:100%;overflow:scroll" id="my-cal-inline"></div>
+    <script is:inline>
+      (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+      Cal("init", "discovery-call", { origin: "https://cal.com" });
+      Cal.ns["discovery-call"]("inline", {
+        elementOrSelector: "#my-cal-inline",
+        config: { "layout": "month_view" },
+        calLink: "brad2ley/discovery-call",
+      });
+      Cal.ns["discovery-call"]("ui", { "hideEventTypeDetails": false, "layout": "month_view" });
+    </script>
+  </section>
+  <section>
+    <div class="card contact">
+      <h3 style="margin-left: 1rem;">{card_heading}</h3>
+      <div class="contact-buttons">
+        <a class="button" href={`tel:${SITE.phone}`}>{phone_label} {SITE.phone}</a>
+        <a class="button" href={`mailto:${SITE.email}`}>{email_label} {SITE.email}</a>
+      </div>
+    </div>
+  </section>
+</PageLayout>

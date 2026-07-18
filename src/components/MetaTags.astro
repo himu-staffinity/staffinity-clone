@@ -5,7 +5,7 @@
  * Provides rich link previews on Discord, Twitter/X, LinkedIn, Slack, Facebook, etc.
  * Falls back to SITE-wide defaults when page-specific props aren't provided.
  */
-import { SITE } from "../consts";
+import { getSite } from "../consts";
 
 export interface Props {
   /** Page title. Used for og:title, twitter:title, and the <title> element. */
@@ -14,7 +14,7 @@ export interface Props {
   meta_title?: string;
   /** Meta description. Falls back to SITE.description. */
   meta_description?: string;
-  /** Full URL to the OG image. Falls back to /assets/images/og-default.svg. */
+  /** Full URL to the OG image. Falls back to /assets/images/196x196.png. */
   image?: string;
   /** Content type. `website` (default) or `article`. */
   og_type?: "website" | "article";
@@ -22,21 +22,50 @@ export interface Props {
   twitter_card?: "summary" | "summary_large_image" | "app" | "player";
   /** Page author name. */
   author?: string;
+  /** Locale. */
+  lang?: string;
 }
+
 
 const {
   title,
   meta_title,
   meta_description,
-  image = "/assets/images/og-default.svg",
+  image = "/assets/images/196x196.png",
   og_type = "website",
   twitter_card = "summary_large_image",
   author,
+  lang = "de",
 } = Astro.props;
+
+export const ogLocales: Record<string, string> = {
+  de: "de_DE",
+  en: "en_US",
+};
+
+const SITE = getSite(lang);
 
 const displayTitle = meta_title || title;
 const description = meta_description || SITE.description;
 const pageUrl = new URL(Astro.url.pathname, SITE.url).href;
+
+// Derive MIME type from image file extension for og:image:type
+function imageMimeType(path: string): string {
+  const ext = path.split('.').pop()?.toLowerCase() ?? '';
+  const types: Record<string, string> = {
+    png: 'image/png',
+    jpg: 'image/jpeg',
+    jpeg: 'image/jpeg',
+    webp: 'image/webp',
+    svg: 'image/svg+xml',
+    gif: 'image/gif',
+  };
+  return types[ext] || 'image/png';
+}
+
+const ogImageUrl = image;
+const ogImageType = image ? imageMimeType(image) : null;
+const ogLocale = ogLocales[lang] || "de_DE";
 ---
 
 <!-- Primary meta -->
@@ -45,18 +74,18 @@ const pageUrl = new URL(Astro.url.pathname, SITE.url).href;
 
 <!-- Open Graph (Facebook, LinkedIn, Discord, Slack, etc.) -->
 <meta property="og:site_name" content={SITE.title} />
-<meta property="og:locale" content="en_US" />
+<meta property="og:locale" content={ogLocale} />
 <meta property="og:url" content={pageUrl} />
 <meta property="og:type" content={og_type} />
 <meta property="og:title" content={displayTitle} />
 <meta property="og:description" content={description} />
 {
-  image && (
+  image && ogImageUrl && (
     <>
-      <meta property="og:image" content={new URL(image, SITE.url).href} />
+      <meta property="og:image" content={ogImageUrl} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="og:image:type" content="image/svg+xml" />
+      {ogImageType && <meta property="og:image:type" content={ogImageType} />}
       <meta property="og:image:alt" content={`${displayTitle} — ${SITE.title}`} />
     </>
   )
@@ -69,7 +98,7 @@ const pageUrl = new URL(Astro.url.pathname, SITE.url).href;
 <meta name="twitter:title" content={displayTitle} />
 <meta name="twitter:description" content={description} />
 {
-  image && (
-    <meta name="twitter:image" content={new URL(image, SITE.url).href} />
+  image && ogImageUrl && (
+    <meta name="twitter:image" content={ogImageUrl} />
   )
 }

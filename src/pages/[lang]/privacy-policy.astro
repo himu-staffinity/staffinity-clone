@@ -1,0 +1,28 @@
+---
+import type { MarkdownInstance } from "astro";
+import PageLayout from "../../layouts/PageLayout.astro";
+import { SITE } from "../../consts";
+import { getLangFromUrl } from "../../utils";
+
+// for exporting language based paths
+export { getStaticPathsLang as getStaticPaths } from "../../utils";
+
+interface PrivacyFrontmatter {
+  title: string;
+  meta_title: string;
+}
+
+const lang = getLangFromUrl(Astro.url);
+
+const privacyPages = Object.values(import.meta.glob<MarkdownInstance<PrivacyFrontmatter>>("../../content/pages/*/privacy-policy.md", { eager: true }));
+const privacyPage = privacyPages.find(p => p.url?.endsWith(`${lang}/privacy-policy`));
+const { title, meta_title } = privacyPage!.frontmatter;
+
+let rawHTML = await privacyPage!.compiledContent();
+rawHTML = rawHTML.replace(/\{\{\s*site\.email\s*\}\}/g, SITE.email);
+rawHTML = rawHTML.replace(/\{\{\s*site\.phone\s*\}\}/g, SITE.phone);
+---
+
+<PageLayout title={title} meta_title={meta_title}>
+  <section class="card card-full" set:html={rawHTML} />
+</PageLayout>

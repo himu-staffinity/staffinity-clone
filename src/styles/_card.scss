@@ -68,4 +68,15 @@
         }
       }
     }
+
+    & .card-footer {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    // Special card for full width content (e.g. privacy policy & Impressum)
+    &.card-full {
+        margin: 2rem auto;
+        cursor: default;
+    }
 }

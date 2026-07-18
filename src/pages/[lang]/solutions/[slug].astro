@@ -1,0 +1,72 @@
+---
+import { getCollection } from "astro:content";
+import PageLayout from "../../../layouts/PageLayout.astro";
+import Cooperation from "../../../components/sections/Cooperation.astro";
+import Expertise from "../../../components/sections/Expertise.astro";
+import * as Icons from "../../../components/icons";
+import { getLangFromUrl, languages } from "../../../utils";
+
+export async function getStaticPaths() {
+  const paths: { params: { lang: string; slug: string }; }[] = [];
+  const solutions = await getCollection("solutions");
+
+  for (const lang of Object.keys(languages)) {
+    for (const solution of solutions) {
+      paths.push({
+        params: {
+          lang,
+          slug: solution.id.replace(`${lang}/`, ""),
+        },
+      });
+    }
+  }
+  return paths;
+}
+
+function toPascalCase(str: string): string {
+  return str
+    .split("_")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join("");
+}
+
+export const solutionPageExtras = {
+  en: {
+    more_about_us: "More about us",
+    about_url: "/en/about",
+  },
+  de: {
+    more_about_us: "Mehr über uns",
+    about_url: "/about",
+  },
+};
+
+// Accept lang from component props (root wrapper), or derive from params (direct route)
+const solutionCollection = await getCollection("solutions");
+const { slug } = Astro.params;
+const lang = getLangFromUrl(Astro.url);
+
+const data = solutionCollection.find(s => {
+  return s.id === `${lang}/${slug}`
+})!.data;
+
+const title = data.title;
+const icon = data.icon;
+const summary = data.summary ?? '';
+const primary_question = data.primary_question;
+const primary_answer = data.primary_answer;
+const details = data.details || [];
+const IconComponent = (Icons as Record<string, any>)[toPascalCase(icon)];
+---
+
+<PageLayout title={title}>
+  <Cooperation
+    maintitle={title}
+    faq={details}
+    primary_question={primary_question}
+    primary_answer={primary_answer}
+    iconComponent={IconComponent}
+    image_alt={title}
+  />
+  <Expertise text={summary} button_text={solutionPageExtras[lang].more_about_us} button_url={solutionPageExtras[lang].about_url} />
+</PageLayout>

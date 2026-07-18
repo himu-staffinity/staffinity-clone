@@ -1,8 +1,11 @@
 ---
+import { getLangFromUrl, defaultLang, getLocalizedPath } from "../utils";
 import { Logo, Menu } from "./icons";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
 
 interface NavItem {
   name: string;
+  key?: string;
   url: string;
 }
 
@@ -11,17 +14,20 @@ interface Props {
 }
 
 const { nav } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
 ---
 
 <header>
   <nav>
-    <a class="logo" href="/">
+    <a class="logo" href={getLocalizedPath('/', lang)}>
       <Logo />
     </a>
     <ul class="nav-links">
       {nav.map((link) => (
         <li><a href={link.url}>{link.name}</a></li>
       ))}
+      <li class="lang-switch"><LanguageSwitcher /></li>
     </ul>
     <div class="menu">
       <Menu />

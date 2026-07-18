@@ -1,0 +1,37 @@
+---
+import type { MarkdownInstance } from "astro";
+import PageLayout from "../../layouts/PageLayout.astro";
+import About from "../../components/sections/About.astro";
+import { getCollection } from "astro:content";
+import { getLangFromUrl } from "../../utils";
+
+// for exporting language based paths
+export { getStaticPathsLang as getStaticPaths, } from "../../utils";
+
+interface AboutFrontmatter {
+  title: string;
+  meta_title: string;
+}
+
+const lang = getLangFromUrl(Astro.url);
+const authors = await getCollection("authors").then(ats => ats.filter(at => at.id.startsWith(lang)));
+
+const aboutPages = Object.values(import.meta.glob<MarkdownInstance<AboutFrontmatter>>("../../content/pages/*/about.md", { eager: true }));
+const aboutPage = aboutPages.find(p => p.url?.endsWith(`${lang}/about`));
+const { title, meta_title } = aboutPage!.frontmatter;
+const aboutContent = await aboutPage!.compiledContent();
+---
+
+<PageLayout title={title} meta_title={meta_title}>
+  <About aboutContent={aboutContent}>
+    <div slot="authors">
+      {authors.map((author) => (
+        <div class="author">
+          <img src={author.data.avatar} alt={author.data.name} />
+          <h4>{author.data.name} <br /><span class="job">{author.data.job}</span></h4>
+          <p>{author.data.description}</p>
+        </div>
+      ))}
+    </div>
+  </About>
+</PageLayout>

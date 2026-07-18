@@ -109,4 +109,73 @@ nav {
             }
         }
     }
+
+    .lang-switch {
+        display: flex;
+        align-items: center;
+        margin-left: 0.5rem;
+        padding-left: 0.75rem;
+        border-left: 1px solid rgba($white, 0.15);
+
+        @include mobile {
+            margin-left: 0;
+            padding-left: 0;
+            border-left: none;
+            justify-content: center;
+        }
+
+        @include tablet {
+            margin-left: 0;
+            padding-left: 0;
+            border-left: none;
+        }
+
+        .language-switcher {
+            display: flex;
+            align-items: center;
+
+            @include tablet {
+                flex-direction: column;
+                align-items: center;
+                line-height: 1.2;
+            }
+
+            a {
+                margin: 0 0.15rem;
+                font-size: 0.85rem;
+
+                @include mobile {
+                    font-size: 1rem;
+                }
+
+                @include tablet {
+                    margin: 0;
+                    padding: 0.1rem 0;
+                }
+
+                opacity: 0.5;
+                transition: opacity 150ms ease, color 150ms ease;
+
+                &:hover {
+                    opacity: 0.8;
+                }
+
+                &.active {
+                    opacity: 1;
+                    color: $green;
+                }
+            }
+
+            a + a::before {
+                content: "|";
+                margin-right: 0.3rem;
+                opacity: 0.3;
+                color: $white;
+
+                @include tablet {
+                    display: none;
+                }
+            }
+        }
+    }
 }

@@ -1,0 +1,28 @@
+---
+import type { MarkdownInstance } from "astro";
+import PageLayout from "../../layouts/PageLayout.astro";
+import { getLangFromUrl } from "../../utils";
+import { SITE } from "../../consts";
+
+// for exporting language based paths
+export { getStaticPathsLang as getStaticPaths } from "../../utils";
+
+interface Frontmatter {
+    title: string;
+}
+const lang = getLangFromUrl(Astro.url);
+
+const impressumPages = Object.values(import.meta.glob<MarkdownInstance<Frontmatter>>("../../content/pages/*/impressum.md", { eager: true }));
+
+// filter out `/[lang]/impressum.md` urls
+const impressumPage = impressumPages.find(p => p.url?.endsWith(`${lang}/impressum`));
+
+const frontmatterTitle = impressumPage?.frontmatter?.title ?? "Impressum";
+
+let htmlContent = await impressumPage?.compiledContent();
+htmlContent = htmlContent?.replace(/\{\{\s*site\.email\s*\}\}/g, SITE.email);
+---
+
+<PageLayout title={frontmatterTitle} meta_title={frontmatterTitle}>
+  <section class="card card-full" set:html={htmlContent} />
+</PageLayout>

@@ -196,13 +196,21 @@ section {
             color: $green;
             cursor: pointer;
 
-            &.active {
-                color: $white;
+            span svg {
+                transition: transform 0.3s ease;
+                .cls-1 {
+                    fill: $green;
+                }
             }
 
-            span svg {
-                .cls-1 {
-                    fill: $white;
+            &.active {
+                color: $white;
+
+                span svg {
+                    transform: rotate(90deg);
+                    .cls-1 {
+                        fill: $white;
+                    }
                 }
             }
         }

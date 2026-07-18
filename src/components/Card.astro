@@ -2,23 +2,37 @@
 import { CardIcon } from "./icons";
 
 interface Props {
-  icon: string;
   title: string;
-  subtitle: string;
+  subtitle?: string;
   url?: string;
 }
-const { title, subtitle, url } = Astro.props;
+const { title, subtitle = "", url } = Astro.props;
 ---
 
 <div class="card">
-  {url ? <a href={url}> : ""}
-  <div class="icon">
-    <slot name="icon" />
-  </div>
-  <h4>{title}</h4>
-  <p>{subtitle}</p>
-  <div class="link-icon">
-    <CardIcon />
-  </div>
-  {url ? </a> : ""}
+  {url ? (
+    <a href={url}>
+      <div class="icon">
+        <slot name="icon" />
+      </div>
+      <h4>{title}</h4>
+      <p>{subtitle}</p>
+      <div class="link-icon">
+        <CardIcon />
+      </div>
+      <slot />
+    </a>
+  ) : (
+    <>
+      <div class="icon">
+        <slot name="icon" />
+      </div>
+      <h4>{title}</h4>
+      <p>{subtitle}</p>
+      <div class="link-icon">
+        <CardIcon />
+      </div>
+      <slot />
+    </>
+  )}
 </div>

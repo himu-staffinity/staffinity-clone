@@ -1,0 +1,60 @@
+---
+import type { MarkdownInstance } from "astro";
+import PageLayout from "../../layouts/PageLayout.astro";
+import Hero from "../../components/sections/Hero.astro";
+import Expertise from "../../components/sections/Expertise.astro";
+import Technologies from "../../components/sections/Technologies.astro";
+import Areas from "../../components/sections/Areas.astro";
+import Cooperation from "../../components/sections/Cooperation.astro";
+import About from "../../components/sections/About.astro";
+import { getCollection } from "astro:content";
+import { getLangFromUrl } from "../../utils";
+import { home } from "../../content/structure/home";
+
+// for exporting language based paths
+export { getStaticPathsLang as getStaticPaths } from "../../utils";
+
+interface AboutFrontmatter {
+  title: string;
+  meta_title: string;
+}
+
+interface WorkFrontmatter {
+  title: string;
+  meta_title: string;
+  collab_alt: string;
+  faq: { question: string; answer: string }[];
+}
+
+const lang = getLangFromUrl(Astro.url);
+const solutions = await getCollection("solutions").then(s => s.filter(s => s.id.startsWith(lang)));
+const homeData = home[lang];
+
+const aboutPages = Object.values(import.meta.glob<MarkdownInstance<AboutFrontmatter>>("../../content/pages/*/about.md", { eager: true }));
+const aboutPage = aboutPages.find(p => p.url?.endsWith(`${lang}/about`));
+const aboutContent = await aboutPage!.compiledContent();
+
+const workPages = Object.values(import.meta.glob<MarkdownInstance<WorkFrontmatter>>("../../content/pages/*/work.md", { eager: true }));
+const workPage = workPages.find(p => p.url?.endsWith(`${lang}/work`));
+const { collab_alt, faq } = workPage!.frontmatter;
+---
+
+<PageLayout title="Home" isHome={true}>
+  <Hero />
+  <Expertise
+    text={homeData.expertise.text}
+    button_text={homeData.expertise.button}
+    button_url={homeData.expertise.button_url}
+    divider={true}
+  />
+  <Technologies number={true} solutions={solutions} />
+  <Areas number={true} />
+  <Cooperation
+    maintitle={`03 | <span class="scramble">${collab_alt}</span>`}
+    faq={faq}
+    image_src="/assets/images/collab.webp"
+    image_alt={homeData.collab_image_alt}
+    number={true}
+  />
+  <About number={true} aboutContent={aboutContent} />
+</PageLayout>

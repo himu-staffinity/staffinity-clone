@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+import Solutions from '../[lang]/solutions/[slug].astro';
+import { languages } from '../../utils';
+
+export async function getStaticPaths() {
+  const solutions = await getCollection("solutions");
+  const paths: { params: { lang: string; slug: string }; props: { solution: any } }[] = [];
+
+  for (const lang of Object.keys(languages)) {
+    const langSolutions = solutions.filter(s => s.id.startsWith(`${lang}/`));
+    for (const solution of langSolutions) {
+      paths.push({
+        params: {
+          lang,
+          slug: solution.id.replace(/\.md$/, "").replace(`${lang}/`, ""),
+        },
+        props: { solution },
+      });
+    }
+  }
+  return paths;
+}
+
+const { solution } = Astro.props;
+---
+
+<Solutions solution={solution} />

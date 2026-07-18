@@ -1,10 +1,9 @@
 ---
 import { SITE } from "../consts";
-import { nav } from "../data/nav";
-import { social } from "../data/social";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import MetaTags from "../components/MetaTags.astro";
+import { getLangFromUrl, getLocalizedPath, defaultLang } from "../utils";
 import "../styles/global.scss";
 
 export interface Props {
@@ -23,11 +22,42 @@ const {
   author,
 } = Astro.props;
 
+const lang = getLangFromUrl(Astro.url);
+
 const displayTitle = meta_title || title || SITE.title;
+
+const social = [
+  {
+    name: "LinkedIn",
+    url: "https://www.linkedin.com/company/staffinity-technologies-gmbh/",
+    icon: "linkedin",
+  },
+];
+
+const nav = {
+  en: [
+    { name: "About", url: "/about/" },
+    { name: "Principles", url: "/work/" },
+    { name: "Technologies", url: "/tech/" },
+    { name: "Contact", url: "/meet/" },
+  ],
+  de: [
+    { name: "Über uns", url: "/about/" },
+    { name: "Prinzipien", url: "/work/" },
+    { name: "Technologien", url: "/tech/" },
+    { name: "Kontakt", url: "/meet/" },
+  ],
+};
+
+// Localize nav for current locale
+const localizedNav = nav[lang].map(item => ({
+  ...item,
+  url: getLocalizedPath(item.url, lang),
+}));
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
@@ -40,6 +70,7 @@ const displayTitle = meta_title || title || SITE.title;
       meta_description={meta_description}
       image={image}
       author={author}
+      lang={lang}
     />
     <meta name="robots" content="index,follow" />
     <meta itemprop="name" content={SITE.title} />
@@ -60,11 +91,11 @@ const displayTitle = meta_title || title || SITE.title;
     <link rel="preload" href="/assets/SpaceGrotesk-Regular.ttf" as="font" type="font/ttf" crossorigin />
   </head>
   <body>
-    <Header nav={nav} />
+    <Header nav={localizedNav} />
     <main>
       <slot />
     </main>
-    <Footer nav={nav} social={social} />
+    <Footer nav={localizedNav} social={social} lang={lang} />
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         let textBoxes = document.querySelectorAll(".scramble") as NodeListOf<HTMLElement>;

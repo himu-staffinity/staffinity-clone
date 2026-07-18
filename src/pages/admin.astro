@@ -1,5 +1,4 @@
 ---
-const env = import.meta.env;
 const configPath = import.meta.env.DEV
   ? "/admin/config.dev.yml"
   : "/admin/config.yml";
@@ -11,7 +10,7 @@ const configPath = import.meta.env.DEV
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <link href={configPath} type="text/yaml" rel="cms-config-url" />
-    <title>Staffinity DecapCMS</title>
+    <title>Staffinity ~ DecapCMS</title>
   </head>
   <body>
   <script src="https://unpkg.com/decap-cms@3.3.3/dist/decap-cms.js"></script>

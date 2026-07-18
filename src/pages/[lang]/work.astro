@@ -1,0 +1,38 @@
+---
+import type { MarkdownInstance } from "astro";
+import PageLayout from "../../layouts/PageLayout.astro";
+import Cooperation from "../../components/sections/Cooperation.astro";
+import { getLangFromUrl } from "../../utils";
+
+// for exporting language based paths
+export { getStaticPathsLang as getStaticPaths } from "../../utils";
+
+interface Frontmatter {
+  title: string;
+  meta_title: string;
+  maintitle: string;
+  collab_alt: string;
+  faq: { question: string; answer: string }[];
+}
+
+const lang = getLangFromUrl(Astro.url);
+
+const workPages = Object.values(
+  import.meta.glob<MarkdownInstance<Frontmatter>>("../../content/pages/*/work.md", { eager: true })
+);
+
+const workPage = workPages.find(p => p.url?.endsWith(`${lang}/work`));
+
+const frontmatter = workPage!.frontmatter;
+let rawHTML = await workPage!.compiledContent();
+---
+
+<PageLayout title={frontmatter.title} meta_title={frontmatter.meta_title}>
+  <Cooperation
+    maintitle={`<span class="scramble">${frontmatter.maintitle}</span>`}
+    faq={frontmatter.faq}
+    image_src="/assets/images/collab.webp"
+    image_alt={frontmatter.collab_alt}
+  />
+  <section style="padding: 2rem;" id="collab-content" set:html={rawHTML} />
+</PageLayout>

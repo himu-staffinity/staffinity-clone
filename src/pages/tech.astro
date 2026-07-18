@@ -1,11 +1,5 @@
 ---
-import PageLayout from "../layouts/PageLayout.astro";
-import Technologies from "../components/sections/Technologies.astro";
-import { getCollection } from "astro:content";
-
-const solutions = await getCollection("solutions");
+import Tech from './[lang]/tech.astro';
 ---
 
-<PageLayout title="Technologien" meta_title="Technologies">
-  <Technologies solutions={solutions} />
-</PageLayout>
+<Tech />

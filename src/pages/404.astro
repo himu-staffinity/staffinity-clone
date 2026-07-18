@@ -1,8 +1,21 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getLangFromUrl } from "../utils";
+
+const lang = getLangFromUrl(Astro.url);
+
+const textLangs = {
+  de: { title: '404 - Seite nicht gefunden', text: "Seite nicht gefunden ...", go_back: "zurück" },
+  en: { title: '404 - Page not found', text: "Page not found ...", go_back: "back" },
+};
+
+const title = textLangs[lang].title;
+const text = textLangs[lang].text;
+const go_back = textLangs[lang].go_back;
+
 ---
 
-<BaseLayout title="404 - Page not found">
+<BaseLayout title={title}>
   <section class="top"></section>
   <section>
     <style>
@@ -12,8 +25,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     </style>
     <div class="console">
       <h2 class="hero">404</h2>
-      <p>Page not found...</p>
-      <div class="button"><a href="/">go back</a></div>
+      <p>{text}</p>
+      <div class="button"><a href="/">{go_back}</a></div>
     </div>
   </section>
 </BaseLayout>

@@ -4,13 +4,17 @@ import * as Icons from "../icons";
 import { Previous, Next } from "../icons";
 // Solutions are passed as a prop (from content collection)
 import type { CollectionEntry } from "astro:content";
+import { defaultLang, getLangFromUrl } from "../../utils";
+import { sections } from "../../content/structure/sections";
 
 interface Props {
   number?: boolean;
   solutions: CollectionEntry<"solutions">[];
 }
 
-const { number, solutions } = Astro.props;
+const { number, solutions } = Astro.props as Props;
+const lang = getLangFromUrl(Astro.url);
+const sectionsData = sections[lang];
 
 function toPascalCase(str: string): string {
   return str
@@ -23,20 +27,26 @@ const solutionsWithIcons = solutions.map((s) => ({
   ...s,
   Icon: (Icons as Record<string, any>)[toPascalCase(s.data.icon)],
 }));
+
+function getUrl(solution: CollectionEntry<"solutions">) {
+  const locale = lang === defaultLang ? "" : `/${lang}`;
+  const id = solution.id.replace(`${lang}/`, "");
+  return `${locale}/solutions/${id}`;
+}
 ---
 
 <div class="section-wrapper tech">
-  <video autoplay muted playsinline>
+  <video autoplay muted playsinline loop>
     <source src="/assets/tech_video.mp4" type="video/mp4" />
   </video>
   <section id="technologies" class="divided-section">
     <div class="console">
-      <h3>{number ? "01 | " : ""}<span class="scramble">TECHNOLOGIES</span></h3>
+      <h3>{number ? "01 | " : ""}<span class="scramble">{sectionsData.technologies}</span></h3>
       <div class="carousel">
         <div class="carousel-items">
           {solutionsWithIcons.map((solution) => (
             <div class="card">
-              <a href={`/loesungen/${solution.id.replace(/\.md$/, "")}/`}>
+              <a href={getUrl(solution)}>
                 <div class="icon">
                   {solution.Icon && <solution.Icon />}
                 </div>

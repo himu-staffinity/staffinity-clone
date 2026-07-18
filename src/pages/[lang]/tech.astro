@@ -1,0 +1,27 @@
+---
+import type { MarkdownInstance } from "astro";
+import PageLayout from "../../layouts/PageLayout.astro";
+import Technologies from "../../components/sections/Technologies.astro";
+import { getCollection } from "astro:content";
+import { getLangFromUrl } from "../../utils";
+
+// for exporting language based paths
+export { getStaticPathsLang as getStaticPaths } from "../../utils";
+
+interface TechFrontmatter {
+  title: string;
+  meta_title: string;
+}
+
+const lang = getLangFromUrl(Astro.url);
+
+const techPages = Object.values(import.meta.glob<MarkdownInstance<TechFrontmatter>>("../../content/pages/*/tech.md", { eager: true }));
+const techPage = techPages.find(p => p.url?.endsWith(`${lang}/tech`));
+const { title, meta_title } = techPage!.frontmatter;
+
+const solutions = await getCollection("solutions").then(s => s.filter(s => s.id.startsWith(`${lang}/`)));
+---
+
+<PageLayout title={title} meta_title={meta_title}>
+  <Technologies solutions={solutions} />
+</PageLayout>
