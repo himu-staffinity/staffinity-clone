@@ -12,10 +12,11 @@ export async function getStaticPaths() {
 
   for (const lang of Object.keys(languages)) {
     for (const solution of solutions) {
+      if (!solution.id.startsWith(`${lang}/`)) continue;
       paths.push({
         params: {
           lang,
-          slug: solution.id.replace(`${lang}/`, ""),
+          slug: solution.id.replace(`${lang}/`, "").replace(/\.md$/, ""),
         },
       });
     }

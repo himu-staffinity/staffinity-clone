@@ -11,7 +11,7 @@ details:
   - question: Hauptmerkmale
     answer:
       - name: Branchenübergreifende Expertise
-        description: Unsere Entwickler haben in verschiedenen Branchen gearbeitet – von Finanzen über Gesundheitswesen bis hin zur Logistik. Sie verstehen die spezifischen Herausforderungen und Anforderungen Ihrer Branche und können darauf aufbauen.
+        description: Unsere Entwickler haben in verschiedenen Branchen gearbeitet - von Finanzen über Gesundheitswesen bis hin zur Logistik. Sie verstehen die spezifischen Herausforderungen und Anforderungen Ihrer Branche und können darauf aufbauen.
       - name: Agile Arbeitsmethodik
         description: Unsere Entwickler folgen agilen Prinzipien, um sich schnell an sich ändernde Anforderungen anzupassen. Durch kurze Iterationen und regelmäßige Abstimmung mit dem Kunden stellen sie sicher, dass das Endergebnis Ihren Erwartungen entspricht.
       - name: Architektur-Know-how

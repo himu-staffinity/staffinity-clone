@@ -13,7 +13,7 @@ details:
   - question: Key Features
     answer:
       - name: Hardware Provider
-        description: We help you select and integrate the right hardware for your AI workloads – from GPU-powered cloud infrastructure to on-premise solutions. Our focus is on performance, scalability, and cost efficiency for training and inference at scale.
+        description: We help you select and integrate the right hardware for your AI workloads - from GPU-powered cloud infrastructure to on-premise solutions. Our focus is on performance, scalability, and cost efficiency for training and inference at scale.
       - name: Data Analysis and Data Science
         description: We design robust data pipelines and analytics workflows to help you transform raw data into actionable insights.
       - name: Python for Artificial Intelligence & Machine Learning
@@ -26,5 +26,5 @@ details:
         description: We deploy and optimize models for fast and reliable inference in real-world applications. Our solutions focus on low latency, scalability, and seamless integration into your existing backend systems and APIs.
       - name: AI Agents
         description: We build intelligent AI agents that can reason, plan, and act within your systems. From task automation to autonomous workflows, our agents integrate LLMs, tools, and APIs to create powerful, context-aware applications.
-summary: We combine strong backend engineering with deep AI expertise. Our team delivers production-ready ML systems, scalable architectures, and seamless integrations. We work closely with your product and engineering teams to move from prototype to reliable, maintainable solutions – fast, transparent, and focused on real business impact.
+summary: We combine strong backend engineering with deep AI expertise. Our team delivers production-ready ML systems, scalable architectures, and seamless integrations. We work closely with your product and engineering teams to move from prototype to reliable, maintainable solutions - fast, transparent, and focused on real business impact.
 ---

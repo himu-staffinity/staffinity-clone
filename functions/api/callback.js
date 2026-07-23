@@ -36,8 +36,6 @@ export async function onRequest(context) {
   const state = url.searchParams.get("state");
   const cookieState = extractCookie(request.headers.get("Cookie"), "oauth_state");
 
-  console.log({ cookieState, cookies: request.headers.get("Cookie"), state });
-
   if (!state || state !== cookieState) {
     return new Response("Invalid state parameter — possible CSRF attack", { status: 403 });
   }
@@ -82,8 +80,6 @@ export async function onRequest(context) {
   }
 
   const accessToken = tokenData.access_token;
-
-  console.log({ accessToken });
 
   const { allowed, reason } = await checkRepoAccess(accessToken, targetRepo);
   if (!allowed) {

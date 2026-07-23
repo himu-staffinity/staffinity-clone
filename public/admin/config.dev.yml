@@ -9,91 +9,128 @@ backend:
 media_folder: public/assets/images
 public_folder: /assets
 
+i18n:
+  structure: multiple_folders
+  locales: [de, en]
+  default_locale: de
+
 collections:
   - label: Solutions
     name: solutions
     folder: src/content/solutions
     create: true
+    i18n: true
     slug: "{{slug}}"
     fields:
-      - label: Title
-        name: title
-        widget: string
-      - label: Subtitle
-        name: subtitle
-        widget: list
-      - label: Icon
-        name: icon
-        widget: string
-      - label: Summary
-        name: summary
-        widget: markdown
-        required: false
-      - label: Primary Question
-        name: primary_question
-        widget: string
-        required: false
-      - label: Primary Answer
-        name: primary_answer
-        widget: markdown
-        required: false
+      - { label: Title, name: title, widget: string, i18n: true }
+      - { label: Subtitle, name: subtitle, widget: list, i18n: true }
+      - { label: Icon, name: icon, widget: string }
+      - { label: Summary, name: summary, widget: markdown, required: false, i18n: true }
+      - { label: Primary Question, name: primary_question, widget: string, required: false, i18n: true }
+      - { label: Primary Answer, name: primary_answer, widget: markdown, required: false, i18n: true }
       - label: Details
         name: details
         widget: list
         required: false
+        i18n: true
         fields:
-          - label: Question
-            name: question
-            widget: string
+          - { label: Question, name: question, widget: string }
           - label: Answer
             name: answer
             widget: list
             fields:
-              - label: Name
-                name: name
-                widget: string
-              - label: Description
-                name: description
-                widget: markdown
-      - label: Layout
-        name: layout
-        widget: string
-        required: false
-      - label: Permalink
-        name: permalink
-        widget: string
-        required: false
+              - { label: Name, name: name, widget: string }
+              - { label: Description, name: description, widget: markdown }
+      - { label: Layout, name: layout, widget: string, required: false }
+      - { label: Permalink, name: permalink, widget: string, required: false }
 
   - label: Authors
     name: authors
     folder: src/content/authors
     create: true
+    i18n: true
     slug: "{{slug}}"
     fields:
-      - label: Name
-        name: name
-        widget: string
-      - label: Job
-        name: job
-        widget: string
-      - label: Description
-        name: description
-        widget: markdown
-      - label: Avatar
-        name: avatar
-        widget: image
-        required: false
-      - label: Linkedin
-        name: linkedin
-        widget: string
-        required: false
+      - { label: Name, name: name, widget: string, i18n: true }
+      - { label: Job, name: job, widget: string, i18n: true }
+      - { label: Description, name: description, widget: markdown, i18n: true }
+      - { label: Avatar, name: avatar, widget: image, i18n: duplicate }
+      - { label: Linkedin, name: linkedin, widget: string, required: false, i18n: duplicate }
 
   - label: Stories
     name: stories
     folder: src/content/stories
+    i18n: true
     create: true
     slug: "{{slug}}"
     fields:
-      - label: Title
-        name: title
-        widget: string
+      - { label: Title, name: title, widget: string, i18n: true }
+
+  - label: Pages
+    name: pages
+    i18n:
+      structure: single_file
+      locales: [de, en]
+      default_locale: de
+    files:
+      - name: about
+        label: About Page
+        file: src/content/pages/about.md
+        i18n: true
+        fields:
+          - { label: Title, name: title, widget: string, i18n: true }
+          - { label: Meta Title, name: meta_title, widget: string, i18n: true, required: false }
+          - { label: More About Us, name: more_about_us_text, widget: string, i18n: true, required: false }
+          - { label: Body, name: body, widget: markdown, i18n: true, required: false }
+      - name: meet
+        label: Meet Page
+        file: src/content/pages/meet.md
+        i18n: true
+        fields:
+          - { label: Title, name: title, widget: string, i18n: true }
+          - { label: Meta Title, name: meta_title, widget: string, i18n: true, required: false }
+          - { label: Heading, name: heading, widget: string, i18n: true, required: false }
+          - { label: Card Heading, name: card_heading, widget: string, i18n: true, required: false }
+          - { label: Phone Label, name: phone_label, widget: string, i18n: true, required: false }
+          - { label: Email Label, name: email_label, widget: string, i18n: true, required: false }
+      - name: work
+        label: Work Page
+        file: src/content/pages/work.md
+        i18n: true
+        fields:
+          - { label: Title, name: title, widget: string, i18n: true }
+          - { label: Meta Title, name: meta_title, widget: string, i18n: true, required: false }
+          - { label: Main Title, name: maintitle, widget: string, i18n: true, required: false }
+          - { label: Collaboration Alt, name: collab_alt, widget: string, i18n: true, required: false }
+          - label: FAQ
+            name: faq
+            widget: list
+            required: false
+            i18n: true
+            fields:
+              - { label: Question, name: question, widget: string }
+              - { label: Answer, name: answer, widget: text }
+          - { label: Body, name: body, widget: markdown, i18n: true, required: false }
+      - name: tech
+        label: Tech Page
+        file: src/content/pages/tech.md
+        i18n: true
+        fields:
+          - { label: Title, name: title, widget: string, i18n: true }
+          - { label: Meta Title, name: meta_title, widget: string, i18n: true, required: false }
+      - name: impressum
+        label: Impressum Page
+        file: src/content/pages/impressum.md
+        i18n: true
+        fields:
+          - { label: Title, name: title, widget: string, i18n: true }
+          - { label: Meta Title, name: meta_title, widget: string, i18n: true, required: false }
+          - { label: Body, name: body, widget: markdown, i18n: true, required: false }
+      - name: privacy_policy
+        label: Privacy Policy Page
+        file: src/content/pages/privacy-policy.md
+        i18n: true
+        fields:
+          - { label: Title, name: title, widget: string, i18n: true }
+          - { label: Meta Title, name: meta_title, widget: string, i18n: true, required: false }
+          - { label: Body, name: body, widget: markdown, i18n: true, required: false }

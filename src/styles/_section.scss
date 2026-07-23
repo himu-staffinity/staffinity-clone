@@ -164,6 +164,18 @@ section {
         width: 100%;
     }
 
+    .card {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+
+        h4, p {
+            overflow-wrap: break-word;
+            word-break: break-word;
+            hyphens: auto;
+        }
+    }
+
     h4 {
         font-size: 1.25rem;
     }

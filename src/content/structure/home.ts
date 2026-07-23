@@ -18,7 +18,7 @@ export const home: Record<string, HomeContent> = {
   },
   de: {
     expertise: {
-      text: "Unsere globalen Experten machen modernste Technologie zugänglich und liefern erstklassige Softwarelösungen, die auf Ihre Bedürfnisse zugeschnitten sind – ohne Ihr Budget zu sprengen.",
+      text: "Unsere globalen Experten machen modernste Technologie zugänglich und liefern erstklassige Softwarelösungen, die auf Ihre Bedürfnisse zugeschnitten sind - ohne Ihr Budget zu sprengen.",
       button: "Mehr über uns",
       button_url: "/about",
     },
