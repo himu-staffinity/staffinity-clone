@@ -1,6 +1,6 @@
 {
   "compatibility_date": "2026-06-30",
-  "name": "worker-template",
+  "name": "staffinity-clone",
   "assets": {
     "directory": "./dist"
   }
