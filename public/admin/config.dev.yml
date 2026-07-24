@@ -68,34 +68,36 @@ collections:
 
   - label: Pages
     name: pages
-    i18n:
-      structure: single_file
-      locales: [de, en]
-      default_locale: de
     files:
-      - name: about
-        label: About Page
-        file: src/content/pages/about.md
+      - label: About Page (English)
+        name: about-en
+        file: src/content/pages/en/about.md
+        create: false
+        slug: "{{slug}}"
         i18n: true
         fields:
           - { label: Title, name: title, widget: string, i18n: true }
           - { label: Meta Title, name: meta_title, widget: string, i18n: true, required: false }
           - { label: More About Us, name: more_about_us_text, widget: string, i18n: true, required: false }
           - { label: Body, name: body, widget: markdown, i18n: true, required: false }
-      - name: meet
-        label: Meet Page
-        file: src/content/pages/meet.md
+
+      - label: About Page (German)
+        name: about-de
+        file: src/content/pages/de/about.md
+        create: false
+        slug: "{{slug}}"
         i18n: true
         fields:
-          - { label: Title, name: title, widget: string, i18n: true }
-          - { label: Meta Title, name: meta_title, widget: string, i18n: true, required: false }
-          - { label: Heading, name: heading, widget: string, i18n: true, required: false }
-          - { label: Card Heading, name: card_heading, widget: string, i18n: true, required: false }
-          - { label: Phone Label, name: phone_label, widget: string, i18n: true, required: false }
-          - { label: Email Label, name: email_label, widget: string, i18n: true, required: false }
-      - name: work
-        label: Work Page
-        file: src/content/pages/work.md
+          - { label: Titel, name: title, widget: string, i18n: true }
+          - { label: Meta-Titel, name: meta_title, widget: string, i18n: true, required: false }
+          - { label: Mehr über uns, name: more_about_us_text, widget: string, i18n: true, required: false }
+          - { label: Inhalt, name: body, widget: markdown, i18n: true, required: false }
+
+      - label: Work Page (English)
+        name: work-en
+        file: src/content/pages/en/work.md
+        create: false
+        slug: "{{slug}}"
         i18n: true
         fields:
           - { label: Title, name: title, widget: string, i18n: true }
@@ -111,26 +113,68 @@ collections:
               - { label: Question, name: question, widget: string }
               - { label: Answer, name: answer, widget: text }
           - { label: Body, name: body, widget: markdown, i18n: true, required: false }
-      - name: tech
-        label: Tech Page
-        file: src/content/pages/tech.md
+
+      - label: Work Page (German)
+        name: work-de
+        file: src/content/pages/de/work.md
+        create: false
+        slug: "{{slug}}"
         i18n: true
         fields:
-          - { label: Title, name: title, widget: string, i18n: true }
-          - { label: Meta Title, name: meta_title, widget: string, i18n: true, required: false }
-      - name: impressum
-        label: Impressum Page
-        file: src/content/pages/impressum.md
+          - { label: Titel, name: title, widget: string, i18n: true }
+          - { label: Meta-Titel, name: meta_title, widget: string, i18n: true, required: false }
+          - { label: Haupttitel, name: maintitle, widget: string, i18n: true, required: false }
+          - { label: Zusammenarbeit Alt, name: collab_alt, widget: string, i18n: true, required: false }
+          - label: FAQ
+            name: faq
+            widget: list
+            required: false
+            i18n: true
+            fields:
+              - { label: Frage, name: question, widget: string }
+              - { label: Antwort, name: answer, widget: text }
+          - { label: Inhalt, name: body, widget: markdown, i18n: true, required: false }
+
+      - label: Impressum (English)
+        name: impressum-en
+        file: src/content/pages/en/impressum.md
+        create: false
+        slug: "{{slug}}"
         i18n: true
         fields:
           - { label: Title, name: title, widget: string, i18n: true }
           - { label: Meta Title, name: meta_title, widget: string, i18n: true, required: false }
           - { label: Body, name: body, widget: markdown, i18n: true, required: false }
-      - name: privacy_policy
-        label: Privacy Policy Page
-        file: src/content/pages/privacy-policy.md
+
+      - label: Impressum (German)
+        name: impressum-de
+        file: src/content/pages/de/impressum.md
+        create: false
+        slug: "{{slug}}"
+        i18n: true
+        fields:
+          - { label: Titel, name: title, widget: string, i18n: true }
+          - { label: Meta-Titel, name: meta_title, widget: string, i18n: true, required: false }
+          - { label: Inhalt, name: body, widget: markdown, i18n: true, required: false }
+
+      - label: Privacy Policy (English)
+        name: privacy_policy-en
+        file: src/content/pages/en/privacy-policy.md
+        create: false
+        slug: "{{slug}}"
         i18n: true
         fields:
           - { label: Title, name: title, widget: string, i18n: true }
           - { label: Meta Title, name: meta_title, widget: string, i18n: true, required: false }
           - { label: Body, name: body, widget: markdown, i18n: true, required: false }
+
+      - label: Datenschutzerklärung
+        name: privacy_policy-de
+        file: src/content/pages/de/privacy-policy.md
+        create: false
+        slug: "{{slug}}"
+        i18n: true
+        fields:
+          - { label: Titel, name: title, widget: string, i18n: true }
+          - { label: Meta-Titel, name: meta_title, widget: string, i18n: true, required: false }
+          - { label: Inhalt, name: body, widget: markdown, i18n: true, required: false }

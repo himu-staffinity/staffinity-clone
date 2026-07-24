@@ -69,7 +69,7 @@ collections:
   - label: Pages
     name: pages
     i18n:
-      structure: single_file
+      structure: multiple_folders
       locales: [de, en]
       default_locale: de
     files:
@@ -82,17 +82,6 @@ collections:
           - { label: Meta Title, name: meta_title, widget: string, i18n: true, required: false }
           - { label: More About Us, name: more_about_us_text, widget: string, i18n: true, required: false }
           - { label: Body, name: body, widget: markdown, i18n: true, required: false }
-      - name: meet
-        label: Meet Page
-        file: src/content/pages/meet.md
-        i18n: true
-        fields:
-          - { label: Title, name: title, widget: string, i18n: true }
-          - { label: Meta Title, name: meta_title, widget: string, i18n: true, required: false }
-          - { label: Heading, name: heading, widget: string, i18n: true, required: false }
-          - { label: Card Heading, name: card_heading, widget: string, i18n: true, required: false }
-          - { label: Phone Label, name: phone_label, widget: string, i18n: true, required: false }
-          - { label: Email Label, name: email_label, widget: string, i18n: true, required: false }
       - name: work
         label: Work Page
         file: src/content/pages/work.md

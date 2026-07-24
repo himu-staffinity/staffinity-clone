@@ -11,9 +11,18 @@ pin = true
 run = "npm install"
 description = "Installs dependencies"
 
-[tasks.dev]
+
+[tasks.astro-dev]
 run = "npm run dev"
 description = "Starts the development server"
+
+[tasks.wrangler]
+run = "wrangler pages dev ."
+description = "Starts the wrangler dev server"
+
+[tasks.dev]
+run = { tasks = [ "astro-dev", "wrangler" ] }
+description = "Starts the development server along with the wrangler task"
 
 [tasks.build]
 run = "npm run build"
@@ -21,5 +30,5 @@ description = "Builds the project with npm"
 
 # Run using `mise r preview`
 [tasks.preview]
-run = "npm run build && wrangler pages dev ."
-description = "Starts the preview server using astro's inbuilt preview"
+run = [ { task = "build" }, { task = "wrangler" } ]
+description = "Starts the preview server using astro's inbuilt preview along with the wrangler server"

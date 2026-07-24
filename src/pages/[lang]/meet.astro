@@ -1,5 +1,4 @@
 ---
-import type { MarkdownInstance } from "astro";
 import PageLayout from "../../layouts/PageLayout.astro";
 import { getSite } from "../../consts";
 import { getLangFromUrl } from "../../utils";
@@ -7,20 +6,28 @@ import { getLangFromUrl } from "../../utils";
 // for exporting language based paths
 export { getStaticPathsLang as getStaticPaths } from "../../utils";
 
-interface MeetFrontmatter {
-  title: string;
-  meta_title: string;
-  heading: string;
-  card_heading: string;
-  phone_label: string;
-  email_label: string;
-}
+const meetPageContent = {
+  en: {
+    title: "Contact",
+    meta_title: "Contact | Staffinity AI",
+    heading: "Contact",
+    card_heading: "Contact",
+    phone_label: "Phone:",
+    email_label: "Email:",
+  },
+  de: {
+    title: "Kontakt",
+    meta_title: "Kontakt | Staffinity AI",
+    heading: "Kontakt",
+    card_heading: "Kontakt",
+    phone_label: "Telefon:",
+    email_label: "E-Mail:",
+  }
+};
 
 const lang = getLangFromUrl(Astro.url);
 
-const meetPages = Object.values(import.meta.glob<MarkdownInstance<MeetFrontmatter>>("../../content/pages/*/meet.md", { eager: true }));
-const meetPage = meetPages.find(p => p.url?.endsWith(`${lang}/meet`));
-const { title, meta_title, heading, card_heading, phone_label, email_label } = meetPage!.frontmatter;
+const { title, meta_title, heading, card_heading, phone_label, email_label } = meetPageContent[lang];
 
 const SITE = getSite(lang);
 ---
